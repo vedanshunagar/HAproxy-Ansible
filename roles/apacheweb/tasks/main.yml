@@ -1,0 +1,19 @@
+---
+# tasks file for apacheweb
+#
+- package:
+        name: "httpd"
+        state: present
+- copy:
+        content: "web page for {{ ansible_nodename }}"
+        dest: "/var/www/html/index.html"
+- service:
+        name: "httpd"
+        state: started
+        enabled: yes        
+- firewalld:
+        permanent: yes
+        immediate: yes
+        state: enabled
+        port: 80/tcp
+  ignore_errors: yes
